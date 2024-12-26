@@ -1026,8 +1026,6 @@ const matrix = [[10,11,13,16,15],
 
 console.log(countSafeReports(matrix));  // Output should be 4
 
-
-
 const validate = (mat) => {
   const valueDiffs = mat.reduce((acc, val, i) => {
 
