@@ -74,6 +74,9 @@ const checkVertical = ({ row, col }: StartPos, direction = "UP" | "DOWN") => {
   return false;
 };
 
+
+// TODO: Check diagonally
+
 for (const [row, cols] of Object.entries(positions)) {
   for (const col of cols) {
     const forward = checkHorizontal({ row, col }, "FORWARD");
