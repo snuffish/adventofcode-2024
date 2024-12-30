@@ -74,7 +74,37 @@ const checkVertical = ({ row, col }: StartPos, direction = "UP" | "DOWN") => {
   return false;
 };
 
-// TODO: Check diagonally
+const checkDiagonal = ({ row, col }: StartPos) => {
+  const diagonal1 = Array(4)
+    .fill()
+    .map(() => [row++, col++]);
+
+  const diagonal2 = Array(4)
+    .fill()
+    .map(() => [row--, col--]);
+
+  checkArr([
+    diagonal1,
+    diagonal2,
+  ])
+};
+
+const checkArr = (arrs) => {
+  for (const arr of arrs) {
+    let convert = arr.map(([row, col]) => {
+      try {
+        if (inputMatrix[row][col]) {
+          return inputMatrix[row][col];
+        }
+      } catch (err) {}
+    });
+
+    const str = convert.join('')
+
+    console.log(str)
+    return str === WORD
+  }
+};
 
 for (const [row, cols] of Object.entries(positions)) {
   for (const col of cols) {
@@ -85,18 +115,16 @@ for (const [row, cols] of Object.entries(positions)) {
       // console.log(`Horizontal (${forward ? 'forward' : 'backward'}) =>`, [row, col]);
     }
 
-    if (checkVertical(
-      { row, col },
-      "DOWN",
-    )) {
-      console.log(`Vertical (down) =>`, [row, col])
+    if (checkVertical({ row, col }, "DOWN")) {
+      console.log(`Vertical (down) =>`, [row, col]);
     }
 
-    if (checkVertical(
-      { row, col },
-      "UP",
-    )) {
-      console.log(`Vertical (up) =>`, [row, col])
+    if (checkVertical({ row, col }, "UP")) {
+      console.log(`Vertical (up) =>`, [row, col]);
+    }
+
+    if (checkDiagonal({ row, col })) {
+      console.log('Diagonal =>', [row, col])
     }
   }
 }
