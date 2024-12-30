@@ -74,7 +74,6 @@ const checkVertical = ({ row, col }: StartPos, direction = "UP" | "DOWN") => {
   return false;
 };
 
-
 // TODO: Check diagonally
 
 for (const [row, cols] of Object.entries(positions)) {
