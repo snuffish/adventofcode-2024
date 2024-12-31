@@ -74,20 +74,7 @@ const checkVertical = ({ row, col }: StartPos, direction = "UP" | "DOWN") => {
   return false;
 };
 
-const checkDiagonal = ({ row, col }: StartPos) => {
-  const diagonal1 = Array(4)
-    .fill()
-    .map(() => [row++, col++]);
-
-  const diagonal2 = Array(4)
-    .fill()
-    .map(() => [row--, col--]);
-
-  checkArr([
-    diagonal1,
-    diagonal2,
-  ])
-};
+let total = 0;
 
 const checkArr = (arrs) => {
   for (const arr of arrs) {
@@ -99,11 +86,37 @@ const checkArr = (arrs) => {
       } catch (err) {}
     });
 
-    const str = convert.join('')
+    const str = convert.join("");
+    const str2 = convert.reverse().join("");
 
-    console.log(str)
-    return str === WORD
+    if (str === WORD || str2 === WORD) {
+      console.log("HIT")
+      total++
+    }
+    return str === WORD || str2 === WORD
   }
+};
+
+
+const checkDiagonal = ({ row, col }: StartPos) => {
+  const diagonal1 = Array.from({ length: 4 }, (_, i) => [row++, col++]);
+  const diagonal2 = Array.from({ length: 4 }, (_, i) => [row--, col--]);
+  const diagonal3 = Array.from({ length: 4 }, (_, i) => [row++, col--]);
+  const diagonal4 = Array.from({ length: 4 }, (_, i) => [row--, col++]);
+  const horizontalForward = Array.from({ length: 4 }, (_, i) => [row, col + i]);
+  const horizontalBackward = Array.from({ length: 4 }, (_, i) => [row, col - i]);
+  const verticalUp = Array.from({ length: 4 }, (_, i) => [row + i, col]);
+  const verticalDown = Array.from({ length: 4 }, (_, i) => [row - i, col]);
+
+  // return checkArr([diagonal1, diagonal2, diagonal3, diagonal4, horizontalForward, horizontalBackward, verticalUp, verticalDown]);
+  checkArr([diagonal1])
+  checkArr([diagonal2])
+  checkArr([diagonal3])
+  checkArr([diagonal4])
+  checkArr([horizontalForward])
+  checkArr([horizontalBackward])
+  checkArr([verticalUp])
+  checkArr([verticalDown])
 };
 
 for (const [row, cols] of Object.entries(positions)) {
@@ -113,18 +126,21 @@ for (const [row, cols] of Object.entries(positions)) {
 
     if (forward || backward) {
       // console.log(`Horizontal (${forward ? 'forward' : 'backward'}) =>`, [row, col]);
+      total++;
     }
 
     if (checkVertical({ row, col }, "DOWN")) {
       console.log(`Vertical (down) =>`, [row, col]);
+      total++;
     }
 
     if (checkVertical({ row, col }, "UP")) {
       console.log(`Vertical (up) =>`, [row, col]);
+      total++;
     }
 
-    if (checkDiagonal({ row, col })) {
-      console.log('Diagonal =>', [row, col])
-    }
+    checkDiagonal({ row, col });
   }
 }
+
+console.log("TOTAL", total);
