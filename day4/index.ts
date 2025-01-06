@@ -57,12 +57,10 @@ const checkHit = ([row, col]: [number, number]) => {
     getMatValue([row - i, col]),
   ).join("");
   isHit(verticalUp);
-
   const verticalDown = Array.from({ length: 4 }, (_, i) =>
     getMatValue([row + i, col]),
   ).join("");
   isHit(verticalDown);
-
   // Diagonal
   const diagonal1 = Array.from({ length: 4 }, (_, i) =>
     getMatValue([row + i, col + i]),
